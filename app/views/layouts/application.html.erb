@@ -22,7 +22,7 @@
 
   <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
-            <%= link_to "GreenBook", posts_path, method: :get, :class => 'navbar-brand link'  %>
+            <a href="/posts"  class="navbar-brand" style="background-color: white; border: none; outline-style: none;">GreenBook</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -33,20 +33,23 @@
 
                     <% if user_signed_in? %>
 
+                    
+                                
+                        
+                    <a href="/posts"  class="nav-link" style="background-color: white; border: none; outline-style: none;">Feed</a>
+                    
                         <li class="nav-item">
-                        <a class="nav-link" href="/posts">Feed</a>
-                            
-                        </li>
-                        <li class="nav-item">
-                            <form method='get' action="#">
+                            <form method='GET' action="#">
                                 
                                 <input type="hidden" name="id" value="<%= current_user.id %>"/>
                             <button  class="nav-link" style="background-color: white; border: none; outline-style: none;">Profile</button>
                             </form>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/messages">Messages</a>
-                        </li>
+                        
+                                
+                        
+                        <a href="/messages"  class="nav-link" style="background-color: white; border: none; outline-style: none;">Messages</a>
+                        
                         
                     <% end %>
                         
@@ -77,58 +80,41 @@
                             
                         <% else %>
                         
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <%= current_user.name %> <span class="caret"></span>
-                                </a>
+                            <li class="nav-item">
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="<%= destroy_user_session_path %>"
+                                    <li class="nav-item nav-link username">
+                                        Olá, <%= current_user.name %>!
+                                    </li>
+                                
+                                
+                                    <li class="nav-item">
+                                    <a class="nav-link" style="background-color: white; border: none; outline-style: none;" href="<%= registration_path(current_user) %>"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                     document.getElementById('delete-user-form').submit();">
+                                        Delete Account
+                                    </a>
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="nav-link" style="background-color: white; border: none; outline-style: none;" href="<%= destroy_user_session_path %>"
+                                        onclick="event.preventDefault();
+                                              document.getElementById('logout-form').submit();">
                                         Logout
                                     </a>
-                                    <button class="dropdown-item" data-toggle="modal" data-target="#modalConfirm">
-                                        Delete Account
-                                    </button>
+                                    </li>
+                    
 
                                     
                                     <%= form_with id: "logout-form", url: "/users/sign_out", method: :delete do |form| %>
                                       
                                     <% end %>
 
+                                    <%= form_with id: "delete-user-form", url: "/users", method: :delete do |form| %>
+                                      
+                                        <% end %>
+
                                     
-                                </div>
-                                <div class="modal fade" id="modalConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            <div class="modal-body">
-                            <form method="delete" action="<%= registration_path(current_user) %>">
-                            
-                            <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Your Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
                                 
-                            </div>
-                            </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-outline-success">Ok</button>
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
+                    
                                 </li>
                          <% end %>
                     </ul>
@@ -136,16 +122,16 @@
             </div>
         </nav>
 
-  <p class="navbar-text float-right">
-  <% if user_signed_in? %>
-    Logged in as <strong><%= current_user.email %></strong>.
-    <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-  <% else %>
-    <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-    <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-  <% end %>
-  </p>
+<!--   <p class="navbar-text float-right">
+   <% if user_signed_in? %>
+     Logged in as <strong><%= current_user.email %></strong>.
+     <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+     <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+   <% else %>
+     <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+     <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+   <% end %>
+   </p> -->
 
 
       <% if notice %>

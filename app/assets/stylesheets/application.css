@@ -27,6 +27,10 @@ a:not(.removeFile .fyp){
     color: #52871d !important;
 }
 
+a:hover:not(.removeFile .fyp){
+    color: #99CC66 !important;
+}
+
 .titulo{
     font-weight: 600;
     color: #52871d;
@@ -37,7 +41,7 @@ a:not(.removeFile .fyp){
     color: #52871d !important;
 }
 
-.nav-link:hover{
+.nav-link:hover:not(.username){
     color: #99CC66 !important;
 }
 

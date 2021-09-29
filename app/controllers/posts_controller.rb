@@ -3,7 +3,15 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    ids = []
+    ids.push(current_user.id)
+    arr = ActiveRecord::Base.connection.execute("Select followed_id from user_user where follower_id = (#{current_user.id})")
+
+    arr.each do |id|
+      ids.push(id.first)
+    end
+   
+    @posts = Post.where(user: ids).order("created_at DESC")
   end
 
   # GET /posts/1 or /posts/1.json
